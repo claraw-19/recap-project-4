@@ -19,15 +19,25 @@ export function ColorForm({ onSubmitColor }) {
     <form onSubmit={handleSubmit}>
       <label htmlFor="role">
         Role:
-        <input type="text" id="role" name="role" value={initialData.role} />
+        <br />
+        <input
+          type="text"
+          id="role"
+          name="role"
+          defaultValue={initialData.role}
+        />
       </label>
+      <br />
       <label htmlFor="hex">
         Hex:
-        <ColorInput id="hex" value={initialData.hex} />
+        <br />
+        <ColorInput id="hex" defaultValue={initialData.hex} />
       </label>
+      <br />
       <label htmlFor="contrastText">
         Contrast Text:
-        <ColorInput id="contrastText" value={initialData.contrastText} />
+        <br />
+        <ColorInput id="contrastText" defaultValue={initialData.contrastText} />
       </label>
       <button>Add Color</button>
     </form>

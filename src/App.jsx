@@ -8,7 +8,7 @@ import { ColorForm } from "./Components/ColorForm/ColorForm";
 function App() {
   const [colors, setColors] = useState(initialColors);
   const addColor = (newColor) => {
-    const newColorWithId = { id: nanoid(), color: newColor };
+    const newColorWithId = { id: nanoid(), ...newColor };
     setColors((prevColors) => [...prevColors, newColorWithId]);
   };
 
@@ -16,7 +16,8 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitColor={addColor} />
-      {initialColors.map((color) => {
+      {colors.map((color) => {
+        console.log(color);
         return <Color key={color.id} color={color} />;
       })}
     </>
