@@ -12,14 +12,29 @@ function App() {
     setColors((prevColors) => [newColorWithId, ...prevColors]);
   };
 
+  const deleteColor = (colorId) => {
+    const remainingColors = colors.filter((color) => colorId !== color.id);
+    setColors(remainingColors);
+  };
+
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitColor={addColor} />
-      {colors.map((color) => {
-        console.log(color);
-        return <Color key={color.id} color={color} />;
-      })}
+      {colors.length === 0 ? (
+        <p>There are no colors, add some!</p>
+      ) : (
+        colors.map((color) => {
+          console.log(color);
+          return (
+            <Color
+              key={color.id}
+              color={color}
+              onDelete={() => deleteColor(color.id)}
+            />
+          );
+        })
+      )}
     </>
   );
 }

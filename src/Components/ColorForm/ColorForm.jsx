@@ -40,6 +40,7 @@ export function ColorForm({ onSubmitColor }) {
         <ColorInput id="contrastText" defaultValue={initialData.contrastText} />
       </label>
       <button>Add Color</button>
+      <br />
     </form>
   );
 }
