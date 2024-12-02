@@ -9,7 +9,7 @@ function App() {
   const [colors, setColors] = useState(initialColors);
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
-    setColors((prevColors) => [...prevColors, newColorWithId]);
+    setColors((prevColors) => [newColorWithId, ...prevColors]);
   };
 
   return (
