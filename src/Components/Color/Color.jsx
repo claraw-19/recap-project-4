@@ -27,6 +27,10 @@ export default function Color({ color, onDelete, onEdit }) {
     setIsEditing(false);
   }
 
+  function handleCancelEdit() {
+    setIsEditing(false);
+  }
+
   return (
     <div
       className="color-card"
@@ -57,6 +61,7 @@ export default function Color({ color, onDelete, onEdit }) {
             onSubmitColor={handleChange}
             buttonText={"Change color"}
           />
+          <button onClick={handleCancelEdit}>Cancel</button>
         </>
       )}
     </div>
