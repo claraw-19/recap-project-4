@@ -52,7 +52,11 @@ export default function Color({ color, onDelete, onEdit }) {
       )}
       {isEditing && (
         <>
-          <ColorForm initialData={color} onSubmitColor={handleChange} />
+          <ColorForm
+            initialData={color}
+            onSubmitColor={handleChange}
+            buttonText={"Change color"}
+          />
         </>
       )}
     </div>

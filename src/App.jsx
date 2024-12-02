@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm onSubmitColor={addColor} />
+      <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
       {colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (

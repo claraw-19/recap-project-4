@@ -1,12 +1,7 @@
 import { ColorInput } from "../ColorInput/ColorInput";
 import "./ColorForm.css";
 
-export function ColorForm({ onSubmitColor, initialData }) {
-  //   const initialData = {
-  //     role: "main color",
-  //     hex: "#ffffff",
-  //     contrastText: "#000000",
-  //   };
+export function ColorForm({ onSubmitColor, initialData, buttonText }) {
   const { role, hex, contrastText } = initialData || {
     role: "main color",
     hex: "#ffffff",
@@ -39,7 +34,7 @@ export function ColorForm({ onSubmitColor, initialData }) {
         <br />
         <ColorInput id="contrastText" defaultValue={contrastText} />
       </label>
-      <button>Add Color</button>
+      <button>{buttonText}</button>
       <br />
     </form>
   );
