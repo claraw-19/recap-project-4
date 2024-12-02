@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./Color.css";
+import { ColorForm } from "../ColorForm/ColorForm";
 
-export default function Color({ color, onDelete }) {
+export default function Color({ color, onDelete, onEdit }) {
   const [isConfirming, setIsConfirming] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   function handleDelete() {
     setIsConfirming(true);
@@ -14,6 +16,19 @@ export default function Color({ color, onDelete }) {
 
   function confirmDelete() {
     onDelete(color.id);
+  }
+
+  function handleEdit() {
+    setIsEditing(true);
+  }
+
+  function handleChange(changedColor) {
+    onEdit(color.id, changedColor);
+    setIsEditing(false);
+  }
+
+  function handleCancelEdit() {
+    setIsEditing(false);
   }
 
   return (
@@ -36,6 +51,17 @@ export default function Color({ color, onDelete }) {
       ) : (
         <>
           <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleEdit}>Edit</button>
+        </>
+      )}
+      {isEditing && (
+        <>
+          <ColorForm
+            initialData={color}
+            onSubmitColor={handleChange}
+            buttonText={"Change color"}
+          />
+          <button onClick={handleCancelEdit}>Cancel</button>
         </>
       )}
     </div>

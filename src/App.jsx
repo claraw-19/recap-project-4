@@ -7,6 +7,7 @@ import { ColorForm } from "./Components/ColorForm/ColorForm";
 
 function App() {
   const [colors, setColors] = useState(initialColors);
+
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
     setColors((prevColors) => [newColorWithId, ...prevColors]);
@@ -17,10 +18,17 @@ function App() {
     setColors(remainingColors);
   };
 
+  const editColor = (colorId, changedColor) => {
+    const changedColors = colors.map((color) =>
+      color.id === colorId ? { ...color, ...changedColor } : color
+    );
+    setColors(changedColors);
+  };
+
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm onSubmitColor={addColor} />
+      <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
       {colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (
@@ -31,6 +39,7 @@ function App() {
               key={color.id}
               color={color}
               onDelete={() => deleteColor(color.id)}
+              onEdit={editColor}
             />
           );
         })
