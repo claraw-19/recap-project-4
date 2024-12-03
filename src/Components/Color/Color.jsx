@@ -5,6 +5,7 @@ import { ColorForm } from "../ColorForm/ColorForm";
 export default function Color({ color, onDelete, onEdit }) {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("Copy!");
 
   function handleDelete() {
     setIsConfirming(true);
@@ -34,6 +35,10 @@ export default function Color({ color, onDelete, onEdit }) {
   async function handleCopy(colorHex) {
     console.log(colorHex);
     await navigator.clipboard.writeText(colorHex);
+    setConfirmationMessage("Copied successfully!");
+    setTimeout(() => {
+      setConfirmationMessage("Copy!");
+    }, 3000);
   }
 
   return (
@@ -45,7 +50,11 @@ export default function Color({ color, onDelete, onEdit }) {
       }}
     >
       <h3 className="color-card-headline">{color.hex}</h3>
-      <button onClick={() => handleCopy(color.hex)}>Copy</button>
+      <>
+        <button onClick={() => handleCopy(color.hex)}>
+          {confirmationMessage}
+        </button>
+      </>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       {isConfirming ? (
