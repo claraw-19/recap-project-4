@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Color.css";
 import { ColorForm } from "../ColorForm/ColorForm";
+import { useEffect } from "react";
 
 export default function Color({ color, onDelete, onEdit }) {
   const [isConfirming, setIsConfirming] = useState(false);
@@ -36,10 +37,16 @@ export default function Color({ color, onDelete, onEdit }) {
     console.log(colorHex);
     await navigator.clipboard.writeText(colorHex);
     setConfirmationMessage("Copied successfully!");
-    setTimeout(() => {
-      setConfirmationMessage("Copy!");
-    }, 3000);
   }
+
+  useEffect(() => {
+    if (confirmationMessage === "Copied successfully!") {
+      const timeoutId = setTimeout(() => {
+        setConfirmationMessage("Copy!");
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [confirmationMessage]);
 
   return (
     <div
