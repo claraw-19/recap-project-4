@@ -3,6 +3,7 @@ import "./Color.css";
 import { ColorForm } from "../ColorForm/ColorForm";
 import { useEffect } from "react";
 import { ContrastCheck } from "../ContrastCheck/ContrastCheck";
+import "../Buttons/Buttons.css";
 
 export default function Color({ color, onDelete, onEdit }) {
   const [isConfirming, setIsConfirming] = useState(false);
@@ -49,21 +50,6 @@ export default function Color({ color, onDelete, onEdit }) {
     }
   }, [confirmationMessage]);
 
-  // async function postFetch() {
-  //   const response = await fetch(
-  //     "https://www.aremycolorsaccessible.com/api/are-they",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({ cool: true }),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   const data = await response.json();
-  //   console.log(data);
-  // }
-
   return (
     <div
       className="color-card"
@@ -80,17 +66,22 @@ export default function Color({ color, onDelete, onEdit }) {
       </>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
-      {/* <p>Overall contrast score: </p> */}
       <ContrastCheck color={color}></ContrastCheck>
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
-          <button onClick={confirmDelete}>Yes</button>
-          <button onClick={handleCancel}>No</button>
+          <button className="button--delete" onClick={confirmDelete}>
+            Yes
+          </button>
+          <button className="button--not-delete" onClick={handleCancel}>
+            No
+          </button>
         </>
       ) : (
         <>
-          <button onClick={handleDelete}>Delete</button>
+          <button className="button--delete" onClick={handleDelete}>
+            Delete
+          </button>
           <button onClick={handleEdit}>Edit</button>
         </>
       )}

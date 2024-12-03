@@ -16,11 +16,17 @@ export function ColorForm({ onSubmitColor, initialData, buttonText }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="colorForm" onSubmit={handleSubmit}>
       <label htmlFor="role">
         Role:
         <br />
-        <input type="text" id="role" name="role" defaultValue={role} />
+        <input
+          className="colorInput"
+          type="text"
+          id="role"
+          name="role"
+          defaultValue={role}
+        />
       </label>
       <br />
       <label htmlFor="hex">
