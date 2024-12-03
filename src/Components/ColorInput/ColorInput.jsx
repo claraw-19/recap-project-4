@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../ColorForm/ColorForm.css";
 
 export function ColorInput({ id, defaultValue }) {
   const [inputValue, setInputValue] = useState(defaultValue);
@@ -10,6 +11,7 @@ export function ColorInput({ id, defaultValue }) {
   return (
     <div>
       <input
+        className="colorInput"
         type="text"
         id={id}
         name={id}

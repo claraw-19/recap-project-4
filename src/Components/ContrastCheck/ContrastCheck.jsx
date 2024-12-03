@@ -28,5 +28,11 @@ export function ContrastCheck({ color }) {
     postFetch();
   }, [color]);
 
-  return <p>{contrastValue ? contrastValue.overall : "Loading..."}</p>;
+  return (
+    <p>
+      {contrastValue
+        ? `Contrast Value: ${contrastValue.overall}`
+        : "Loading..."}
+    </p>
+  );
 }
