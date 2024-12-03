@@ -10,7 +10,7 @@ function App() {
   const [colors, setColors] = useLocalStorageState("themecolors", {
     defaultValue: initialColors,
   });
-  console.log(initialColors);
+  // console.log(initialColors);
 
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
@@ -37,7 +37,7 @@ function App() {
         <p>There are no colors, add some!</p>
       ) : (
         colors.map((color) => {
-          console.log(color);
+          // console.log(color);
           return (
             <Color
               key={color.id}

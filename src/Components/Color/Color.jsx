@@ -1,10 +1,12 @@
 import { useState } from "react";
 import "./Color.css";
 import { ColorForm } from "../ColorForm/ColorForm";
+import { useEffect } from "react";
 
 export default function Color({ color, onDelete, onEdit }) {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState("Copy!");
 
   function handleDelete() {
     setIsConfirming(true);
@@ -31,6 +33,21 @@ export default function Color({ color, onDelete, onEdit }) {
     setIsEditing(false);
   }
 
+  async function handleCopy(colorHex) {
+    console.log(colorHex);
+    await navigator.clipboard.writeText(colorHex);
+    setConfirmationMessage("Copied successfully!");
+  }
+
+  useEffect(() => {
+    if (confirmationMessage === "Copied successfully!") {
+      const timeoutId = setTimeout(() => {
+        setConfirmationMessage("Copy!");
+      }, 3000);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [confirmationMessage]);
+
   return (
     <div
       className="color-card"
@@ -40,6 +57,11 @@ export default function Color({ color, onDelete, onEdit }) {
       }}
     >
       <h3 className="color-card-headline">{color.hex}</h3>
+      <>
+        <button onClick={() => handleCopy(color.hex)}>
+          {confirmationMessage}
+        </button>
+      </>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       {isConfirming ? (
