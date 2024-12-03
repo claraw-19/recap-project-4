@@ -31,6 +31,11 @@ export default function Color({ color, onDelete, onEdit }) {
     setIsEditing(false);
   }
 
+  async function handleCopy(colorHex) {
+    console.log(colorHex);
+    await navigator.clipboard.writeText(colorHex);
+  }
+
   return (
     <div
       className="color-card"
@@ -40,6 +45,7 @@ export default function Color({ color, onDelete, onEdit }) {
       }}
     >
       <h3 className="color-card-headline">{color.hex}</h3>
+      <button onClick={() => handleCopy(color.hex)}>Copy</button>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       {isConfirming ? (
