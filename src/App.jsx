@@ -1,21 +1,33 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
-import { useState } from "react";
+// import { useState } from "react";
 import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
 
 function App() {
+  // const clearLocalStorage = () => {
+  //   localStorage.removeItem("allThemes");
+  // };
+  // clearLocalStorage();
   const [colors, setColors] = useLocalStorageState("themecolors", {
     defaultValue: initialColors,
   });
-  // console.log(initialColors);
+  console.log("colors: ", colors);
+  console.log("Initial Colors:", initialColors);
+
   const [selectedTheme, setSelectedTheme] = useLocalStorageState(
     "selectedTheme",
     { defaultValue: initialThemes[0] }
   );
+  console.log("selected theme: ", selectedTheme);
+  const [allThemes, setAllThemes] = useLocalStorageState("allThemes", {
+    defaultValue: initialThemes,
+  });
+  console.log("all themes: ", allThemes);
+  console.log("Initial Themes:", initialThemes);
 
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
@@ -50,32 +62,38 @@ function App() {
 
   const handleChange = (event) => {
     const selectedId = event.target.value;
-    const theme = initialThemes.find((theme) => theme.id === selectedId);
+    const theme = allThemes.find((theme) => theme.id === selectedId);
     if (theme) {
       setSelectedTheme(theme);
     }
+  };
+
+  const addTheme = () => {
+    const newTheme = { id: nanoid(), name: "new Theme", colors: [] };
+    setAllThemes((prevThemes) => [newTheme, ...prevThemes]);
+    setSelectedTheme(newTheme);
   };
 
   return (
     <>
       <h1>Theme Creator</h1>
       <select onChange={handleChange} value={selectedTheme.id}>
-        {initialThemes.map((theme) => (
+        {allThemes.map((theme) => (
           <option key={theme.id} value={theme.id}>
             {theme.name}
           </option>
         ))}
       </select>
-      <button className="button--green">Add</button>
+      <button onClick={addTheme} className="button--green">
+        Add
+      </button>
       <button>Edit</button>
       <button className="button--red">Remove</button>
       <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
       {selectedTheme.colors.length === 0 ? (
-        // {colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (
         selectedTheme.colors.map((color) => {
-          // colors.map((color) => {
           // console.log(color);
           return (
             <Color
