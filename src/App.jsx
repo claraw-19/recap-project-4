@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
+import "./Components/Buttons/Buttons.css";
 
 function App() {
   const [colors, setColors] = useLocalStorageState("themecolors", {

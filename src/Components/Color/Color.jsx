@@ -70,16 +70,16 @@ export default function Color({ color, onDelete, onEdit }) {
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
-          <button className="button--delete" onClick={confirmDelete}>
+          <button className="button--red" onClick={confirmDelete}>
             Yes
           </button>
-          <button className="button--not-delete" onClick={handleCancel}>
+          <button className="button--green" onClick={handleCancel}>
             No
           </button>
         </>
       ) : (
         <>
-          <button className="button--delete" onClick={handleDelete}>
+          <button className="button--red" onClick={handleDelete}>
             Delete
           </button>
           <button onClick={handleEdit}>Edit</button>
