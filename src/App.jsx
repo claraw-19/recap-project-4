@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <select onChange={handleChange}>
+      <select onChange={handleChange} value={selectedTheme.id}>
         {initialThemes.map((theme) => (
           <option key={theme.id} value={theme.id}>
             {theme.name}
@@ -53,11 +53,13 @@ function App() {
       <button className="button--green">Add</button>
       <button>Edit</button>
       <button className="button--red">Remove</button>
+
+      <h2>Selected Theme: {selectedTheme.name}</h2>
       <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
-      {colors.length === 0 ? (
+      {selectedTheme.colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (
-        colors.map((color) => {
+        selectedTheme.colors.map((color) => {
           // console.log(color);
           return (
             <Color
