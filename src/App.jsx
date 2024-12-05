@@ -93,16 +93,18 @@ function App() {
   const addTheme = () => {
     const newTheme = {
       id: nanoid(),
-      name: `new Theme ${allThemes.length - 1}`,
+      name: "new theme",
       colors: [],
     };
     setAllThemes((prevThemes) => [newTheme, ...prevThemes]);
     setSelectedTheme(newTheme);
   };
 
-  // const removeTheme = (id) => {
-  //   allThemes.filter((theme) => theme.id !== id);
-  // };
+  const removeTheme = (themeId) => {
+    const remainingThemes = allThemes.filter((theme) => theme.id !== themeId);
+    setAllThemes(remainingThemes);
+    setSelectedTheme(() => allThemes.find((theme) => theme.id === "t1"));
+  };
 
   return (
     <>
@@ -117,10 +119,22 @@ function App() {
       <button onClick={addTheme} className="button--green">
         Add
       </button>
-      <button>Edit</button>
       <button
-        // onClick={() => removeTheme(selectedTheme.id)}
-        className="button--red"
+        className={
+          selectedTheme.id === initialThemes[0].id ? "button--disabled" : ""
+        }
+        disabled={selectedTheme.id === initialThemes[0].id}
+      >
+        Edit
+      </button>
+      <button
+        onClick={() => removeTheme(selectedTheme.id)}
+        className={
+          selectedTheme.id === initialThemes[0].id
+            ? "button--disabled"
+            : "button--red"
+        }
+        disabled={selectedTheme.id === initialThemes[0].id}
       >
         Remove
       </button>
