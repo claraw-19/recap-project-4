@@ -67,6 +67,18 @@ export default function Color({ color, onDelete, onEdit }) {
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       <ContrastCheck color={color}></ContrastCheck>
+      {isEditing ? (
+        <>
+          <ColorForm
+            initialData={color}
+            onSubmitColor={handleChange}
+            buttonText={"Change color"}
+          />
+          <button onClick={handleCancelEdit}>Cancel</button>
+        </>
+      ) : (
+        <button onClick={handleEdit}>Edit</button>
+      )}
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
@@ -82,17 +94,6 @@ export default function Color({ color, onDelete, onEdit }) {
           <button className="button--red" onClick={handleDelete}>
             Delete
           </button>
-          <button onClick={handleEdit}>Edit</button>
-        </>
-      )}
-      {isEditing && (
-        <>
-          <ColorForm
-            initialData={color}
-            onSubmitColor={handleChange}
-            buttonText={"Change color"}
-          />
-          <button onClick={handleCancelEdit}>Cancel</button>
         </>
       )}
     </div>

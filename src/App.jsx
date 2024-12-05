@@ -40,14 +40,14 @@ function App() {
   };
 
   const handleDeleteTheme = () => {
-    setIsEditing(false);
+    // setIsEditing(false);
     setIsConfirmingDelete(true);
   };
 
-  const setIsEditingTrue = () => {
-    setIsConfirmingDelete(false);
-    setIsEditing(true);
-  };
+  // const setIsEditingTrue = () => {
+  //   setIsConfirmingDelete(false);
+  //   setIsEditing(true);
+  // };
 
   const cancelDeleteTheme = () => {
     setIsConfirmingDelete(false);
@@ -163,7 +163,7 @@ function App() {
       ) : (
         <>
           <button
-            onClick={setIsEditingTrue}
+            onClick={() => setIsEditing(true)}
             className={
               selectedTheme.id === initialThemes[0].id ? "button--disabled" : ""
             }
