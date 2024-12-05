@@ -34,3 +34,10 @@ button:hover {
   color: #4c4c4c;
   background-color: #777777;
 }
+
+.button--disabled:hover {
+  background-color: #777777;
+  box-shadow: none;
+  transform: none;
+  cursor: auto;
+}

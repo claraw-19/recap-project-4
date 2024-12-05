@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import "./ContrastCheck.css";
 
 export function ContrastCheck({ color }) {
   const [contrastValue, setContrastValue] = useState(null);
-
+  console.log("contrastValue:", contrastValue);
   useEffect(() => {
     async function postFetch() {
       try {
@@ -18,9 +19,7 @@ export function ContrastCheck({ color }) {
         );
 
         const data = await response.json();
-        // console.log("data: ", data);
         setContrastValue(data);
-        // console.log(contrastValue);
       } catch (error) {
         console.error("Error fetching contrast data:", error);
       }
@@ -28,8 +27,26 @@ export function ContrastCheck({ color }) {
     postFetch();
   }, [color]);
 
+  function getColor(value) {
+    if (value === "Yup") {
+      return "green";
+    } else if (value === "Kinda") {
+      return "yellow";
+    } else {
+      return "red";
+    }
+  }
+
   return (
-    <p>
+    <p
+      className="contrast-background"
+      style={{
+        color:
+          contrastValue && contrastValue.overall
+            ? getColor(contrastValue.overall)
+            : "gray",
+      }}
+    >
       {contrastValue
         ? `Contrast Value: ${contrastValue.overall}`
         : "Loading..."}

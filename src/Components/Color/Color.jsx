@@ -67,6 +67,7 @@ export default function Color({ color, onDelete, onEdit }) {
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       <ContrastCheck color={color}></ContrastCheck>
+      <br />
       {isEditing ? (
         <>
           <ColorForm
