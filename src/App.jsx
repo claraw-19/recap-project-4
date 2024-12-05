@@ -28,6 +28,31 @@ function App() {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+
+  const confirmDeleteTheme = () => {
+    const remainingThemes = allThemes.filter(
+      (theme) => theme.id !== selectedTheme.id
+    );
+    setAllThemes(remainingThemes);
+    setSelectedTheme(() => remainingThemes[0] || initialThemes[0]);
+    setIsConfirmingDelete(false);
+  };
+
+  const handleDeleteTheme = () => {
+    setIsEditing(false);
+    setIsConfirmingDelete(true);
+  };
+
+  const setIsEditingTrue = () => {
+    setIsConfirmingDelete(false);
+    setIsEditing(true);
+  };
+
+  const cancelDeleteTheme = () => {
+    setIsConfirmingDelete(false);
+  };
+
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
     setColors((prevColors) => [newColorWithId, ...prevColors]);
@@ -104,12 +129,6 @@ function App() {
     setSelectedTheme(newTheme);
   };
 
-  const removeTheme = (themeId) => {
-    const remainingThemes = allThemes.filter((theme) => theme.id !== themeId);
-    setAllThemes(remainingThemes);
-    setSelectedTheme(() => allThemes.find((theme) => theme.id === "t1"));
-  };
-
   const editThemeName = (newName) => {
     setSelectedTheme((prevTheme) => ({
       ...prevTheme,
@@ -133,7 +152,9 @@ function App() {
           </option>
         ))}
       </select>
-
+      <button onClick={addTheme} className="button--green">
+        Add
+      </button>
       {isEditing ? (
         <ThemeForm
           onSave={editThemeName}
@@ -141,11 +162,8 @@ function App() {
         ></ThemeForm>
       ) : (
         <>
-          <button onClick={addTheme} className="button--green">
-            Add
-          </button>
           <button
-            onClick={() => setIsEditing(true)}
+            onClick={setIsEditingTrue}
             className={
               selectedTheme.id === initialThemes[0].id ? "button--disabled" : ""
             }
@@ -153,18 +171,30 @@ function App() {
           >
             Edit
           </button>
-          <button
-            onClick={() => removeTheme(selectedTheme.id)}
-            className={
-              selectedTheme.id === initialThemes[0].id
-                ? "button--disabled"
-                : "button--red"
-            }
-            disabled={selectedTheme.id === initialThemes[0].id}
-          >
-            Remove
+        </>
+      )}
+      {isConfirmingDelete ? (
+        <>
+          <p>Remove?</p>
+          <button onClick={confirmDeleteTheme} className="button--red">
+            Yes
+          </button>
+          <button onClick={cancelDeleteTheme} className="button--green">
+            No
           </button>
         </>
+      ) : (
+        <button
+          onClick={handleDeleteTheme}
+          className={
+            selectedTheme.id === initialThemes[0].id
+              ? "button--disabled"
+              : "button--red"
+          }
+          disabled={selectedTheme.id === initialThemes[0].id}
+        >
+          Remove Theme
+        </button>
       )}
 
       <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
