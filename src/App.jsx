@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
+import { ThemeForm } from "./Components/ThemeForm/ThemeForm";
 
 function App() {
   // const clearLocalStorage = () => {
@@ -106,6 +107,18 @@ function App() {
     setSelectedTheme(() => allThemes.find((theme) => theme.id === "t1"));
   };
 
+  const editThemeName = (newName) => {
+    setSelectedTheme((prevTheme) => ({
+      ...prevTheme,
+      name: newName,
+    }));
+    setAllThemes((prevThemes) =>
+      prevThemes.map((theme) =>
+        theme.id === selectedTheme.id ? { ...theme, name: newName } : theme
+      )
+    );
+  };
+
   return (
     <>
       <h1>Theme Creator</h1>
@@ -116,6 +129,7 @@ function App() {
           </option>
         ))}
       </select>
+      <ThemeForm onSave={editThemeName}></ThemeForm>
       <button onClick={addTheme} className="button--green">
         Add
       </button>
