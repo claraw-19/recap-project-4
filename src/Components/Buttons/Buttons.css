@@ -14,18 +14,23 @@ button:hover {
   transform: scale(1.05);
 }
 
-.button--delete {
+.button--red {
   background-color: red;
 }
 
-.button--delete:hover {
+.button--red:hover {
   background-color: rgb(185, 0, 0);
 }
 
-.button--not-delete {
+.button--green {
   background-color: green;
 }
 
-.button--not-delete:hover {
+.button--green:hover {
   background-color: rgb(0, 98, 0);
+}
+
+.button--disabled {
+  color: #4c4c4c;
+  background-color: #777777;
 }

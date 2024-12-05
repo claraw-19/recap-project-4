@@ -67,25 +67,7 @@ export default function Color({ color, onDelete, onEdit }) {
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       <ContrastCheck color={color}></ContrastCheck>
-      {isConfirming ? (
-        <>
-          <p className="color-card-hightlight">Delete?</p>
-          <button className="button--delete" onClick={confirmDelete}>
-            Yes
-          </button>
-          <button className="button--not-delete" onClick={handleCancel}>
-            No
-          </button>
-        </>
-      ) : (
-        <>
-          <button className="button--delete" onClick={handleDelete}>
-            Delete
-          </button>
-          <button onClick={handleEdit}>Edit</button>
-        </>
-      )}
-      {isEditing && (
+      {isEditing ? (
         <>
           <ColorForm
             initialData={color}
@@ -93,6 +75,25 @@ export default function Color({ color, onDelete, onEdit }) {
             buttonText={"Change color"}
           />
           <button onClick={handleCancelEdit}>Cancel</button>
+        </>
+      ) : (
+        <button onClick={handleEdit}>Edit</button>
+      )}
+      {isConfirming ? (
+        <>
+          <p className="color-card-hightlight">Delete?</p>
+          <button className="button--red" onClick={confirmDelete}>
+            Yes
+          </button>
+          <button className="button--green" onClick={handleCancel}>
+            No
+          </button>
+        </>
+      ) : (
+        <>
+          <button className="button--red" onClick={handleDelete}>
+            Delete
+          </button>
         </>
       )}
     </div>
