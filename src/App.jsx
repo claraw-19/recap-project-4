@@ -1,7 +1,6 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
-// import { useState } from "react";
 import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
@@ -15,36 +14,50 @@ function App() {
   const [colors, setColors] = useLocalStorageState("themecolors", {
     defaultValue: initialColors,
   });
-  console.log("colors: ", colors);
-  console.log("Initial Colors:", initialColors);
 
   const [selectedTheme, setSelectedTheme] = useLocalStorageState(
     "selectedTheme",
     { defaultValue: initialThemes[0] }
   );
-  console.log("selected theme: ", selectedTheme);
+
   const [allThemes, setAllThemes] = useLocalStorageState("allThemes", {
     defaultValue: initialThemes,
   });
-  console.log("all themes: ", allThemes);
-  console.log("Initial Themes:", initialThemes);
 
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
     setColors((prevColors) => [newColorWithId, ...prevColors]);
-    setSelectedTheme((prevTheme) => ({
-      ...prevTheme,
-      colors: [newColorWithId, ...prevTheme.colors],
-    }));
+
+    setSelectedTheme((prevTheme) => {
+      const updatedTheme = {
+        ...prevTheme,
+        colors: [newColorWithId, ...prevTheme.colors],
+      };
+      setAllThemes((prevThemes) =>
+        prevThemes.map((theme) =>
+          theme.id === updatedTheme.id ? updatedTheme : theme
+        )
+      );
+      return updatedTheme;
+    });
   };
 
   const deleteColor = (colorId) => {
     const remainingColors = colors.filter((color) => colorId !== color.id);
     setColors(remainingColors);
-    setSelectedTheme((prevTheme) => ({
-      ...prevTheme,
-      colors: prevTheme.colors.filter((color) => color.id !== colorId),
-    }));
+
+    setSelectedTheme((prevTheme) => {
+      const updatedTheme = {
+        ...prevTheme,
+        colors: prevTheme.colors.filter((color) => color.id !== colorId),
+      };
+      setAllThemes((prevThemes) =>
+        prevThemes.map((theme) =>
+          theme.id === updatedTheme.id ? updatedTheme : theme
+        )
+      );
+      return updatedTheme;
+    });
   };
 
   const editColor = (colorId, changedColor) => {
@@ -52,12 +65,21 @@ function App() {
       color.id === colorId ? { ...color, ...changedColor } : color
     );
     setColors(changedColors);
-    setSelectedTheme((prevTheme) => ({
-      ...prevTheme,
-      colors: prevTheme.colors.map((color) =>
-        color.id === colorId ? { ...color, ...changedColor } : color
-      ),
-    }));
+
+    setSelectedTheme((prevTheme) => {
+      const updatedTheme = {
+        ...prevTheme,
+        colors: prevTheme.colors.map((color) =>
+          color.id === colorId ? { ...color, ...changedColor } : color
+        ),
+      };
+      setAllThemes((prevThemes) =>
+        prevThemes.map((theme) =>
+          theme.id === updatedTheme.id ? updatedTheme : theme
+        )
+      );
+      return updatedTheme;
+    });
   };
 
   const handleChange = (event) => {
@@ -69,10 +91,18 @@ function App() {
   };
 
   const addTheme = () => {
-    const newTheme = { id: nanoid(), name: "new Theme", colors: [] };
+    const newTheme = {
+      id: nanoid(),
+      name: `new Theme ${allThemes.length - 1}`,
+      colors: [],
+    };
     setAllThemes((prevThemes) => [newTheme, ...prevThemes]);
     setSelectedTheme(newTheme);
   };
+
+  // const removeTheme = (id) => {
+  //   allThemes.filter((theme) => theme.id !== id);
+  // };
 
   return (
     <>
@@ -88,13 +118,17 @@ function App() {
         Add
       </button>
       <button>Edit</button>
-      <button className="button--red">Remove</button>
+      <button
+        // onClick={() => removeTheme(selectedTheme.id)}
+        className="button--red"
+      >
+        Remove
+      </button>
       <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
       {selectedTheme.colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (
         selectedTheme.colors.map((color) => {
-          // console.log(color);
           return (
             <Color
               key={color.id}
