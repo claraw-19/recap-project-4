@@ -159,6 +159,7 @@ function App() {
       </button>
       {isEditing ? (
         <>
+          <p>New name:</p>
           <ThemeForm
             onSave={editThemeName}
             currentName={selectedTheme.name}
