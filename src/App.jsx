@@ -30,6 +30,8 @@ function App() {
 
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
+  // const [isConfirmingEdit, setIsConfirmingEdit] = useState(false);
+
   const confirmDeleteTheme = () => {
     const remainingThemes = allThemes.filter(
       (theme) => theme.id !== selectedTheme.id
@@ -156,10 +158,13 @@ function App() {
         Add
       </button>
       {isEditing ? (
-        <ThemeForm
-          onSave={editThemeName}
-          currentName={selectedTheme.name}
-        ></ThemeForm>
+        <>
+          <ThemeForm
+            onSave={editThemeName}
+            currentName={selectedTheme.name}
+          ></ThemeForm>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
       ) : (
         <>
           <button
