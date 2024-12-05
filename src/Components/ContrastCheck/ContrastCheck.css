@@ -1,0 +1,9 @@
+.contrast-background {
+  /* padding: 0 0.2em;  */
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
