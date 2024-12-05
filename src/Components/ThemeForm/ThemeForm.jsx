@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useEffect } from "react";
 
-export function ThemeForm({ onSave }) {
-  const [name, setName] = useState("");
+export function ThemeForm({ onSave, currentName }) {
+  const [name, setName] = useState(currentName || "");
+
+  useEffect(() => {
+    setName(currentName);
+  }, [currentName]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);

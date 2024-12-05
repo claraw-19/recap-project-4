@@ -6,7 +6,6 @@ import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
 import { ThemeForm } from "./Components/ThemeForm/ThemeForm";
-import { useState } from "react";
 
 function App() {
   // const clearLocalStorage = () => {
@@ -25,8 +24,6 @@ function App() {
   const [allThemes, setAllThemes] = useLocalStorageState("allThemes", {
     defaultValue: initialThemes,
   });
-
-  const [isEditing, setIsEditing] = useState(false);
 
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
@@ -120,7 +117,6 @@ function App() {
         theme.id === selectedTheme.id ? { ...theme, name: newName } : theme
       )
     );
-    setIsEditing(false);
   };
 
   return (
@@ -133,12 +129,14 @@ function App() {
           </option>
         ))}
       </select>
-      {isEditing && <ThemeForm onSave={editThemeName} />}
+      <ThemeForm
+        onSave={editThemeName}
+        currentName={selectedTheme.name}
+      ></ThemeForm>
       <button onClick={addTheme} className="button--green">
         Add
       </button>
       <button
-        onClick={() => setIsEditing(true)}
         className={
           selectedTheme.id === initialThemes[0].id ? "button--disabled" : ""
         }
