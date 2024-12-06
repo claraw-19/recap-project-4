@@ -6,6 +6,7 @@ import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
 import { ThemeActions } from "./Components/ThemeActions/ThemeActions";
+import { Dropdown } from "./Components/Dropdown/Dropdown";
 
 function App() {
   // const clearLocalStorage = () => {
@@ -47,24 +48,29 @@ function App() {
     });
   };
 
-  const handleChange = (event) => {
-    const selectedId = event.target.value;
-    const theme = allThemes.find((theme) => theme.id === selectedId);
-    if (theme) {
-      setSelectedTheme(theme);
-    }
-  };
+  // const handleChange = (event) => {
+  //   const selectedId = event.target.value;
+  //   const theme = allThemes.find((theme) => theme.id === selectedId);
+  //   if (theme) {
+  //     setSelectedTheme(theme);
+  //   }
+  // };
 
   return (
     <>
       <h1>Theme Creator</h1>
-      <select onChange={handleChange} value={selectedTheme.id}>
+      <Dropdown
+        selectedTheme={selectedTheme}
+        setSelectedTheme={setSelectedTheme}
+        allThemes={allThemes}
+      />
+      {/* <select onChange={handleChange} value={selectedTheme.id}>
         {allThemes.map((theme) => (
           <option key={theme.id} value={theme.id}>
             {theme.name}
           </option>
         ))}
-      </select>
+      </select> */}
       <ThemeActions
         setAllThemes={setAllThemes}
         setSelectedTheme={setSelectedTheme}

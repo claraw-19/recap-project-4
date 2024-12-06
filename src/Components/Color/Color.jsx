@@ -4,11 +4,7 @@ import { ColorForm } from "../ColorForm/ColorForm";
 import { useEffect } from "react";
 import { ContrastCheck } from "../ContrastCheck/ContrastCheck";
 import "../Buttons/Buttons.css";
-// import useLocalStorageState from "use-local-storage-state";
-// import { nanoid } from "nanoid";
-// import { initialColors } from "../../lib/colors";
 
-// export default function Color({ color, onDelete, onEdit }) {
 export default function Color({
   color,
   setSelectedTheme,
@@ -61,7 +57,6 @@ export default function Color({
   };
 
   function handleChange(changedColor) {
-    // onEdit(color.id, changedColor);
     editColor(color.id, changedColor);
     setIsEditing(false);
   }
@@ -114,8 +109,6 @@ export default function Color({
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
-          {/* <button className="button--red" onClick={() => onDelete(color.id)}>
-           */}
           <button className="button--red" onClick={() => deleteColor(color.id)}>
             Yes
           </button>
