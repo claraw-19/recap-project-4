@@ -1,12 +1,12 @@
 import { initialColors } from "./lib/colors";
 import Color from "./Components/Color/Color";
 import "./App.css";
-import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
 import { ThemeActions } from "./Components/ThemeActions/ThemeActions";
 import { Dropdown } from "./Components/Dropdown/Dropdown";
+import { nanoid } from "nanoid";
 
 function App() {
   // const clearLocalStorage = () => {
@@ -64,7 +64,7 @@ function App() {
         initialThemes={initialThemes}
       />
 
-      <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
+      <ColorForm onSubmitColor={addColor} buttonText={"Add Theme"} />
       {selectedTheme.colors.length === 0 ? (
         <p>There are no colors, add some!</p>
       ) : (
