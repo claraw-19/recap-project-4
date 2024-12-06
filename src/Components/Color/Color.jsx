@@ -4,14 +4,65 @@ import { ColorForm } from "../ColorForm/ColorForm";
 import { useEffect } from "react";
 import { ContrastCheck } from "../ContrastCheck/ContrastCheck";
 import "../Buttons/Buttons.css";
+// import useLocalStorageState from "use-local-storage-state";
+// import { nanoid } from "nanoid";
+// import { initialColors } from "../../lib/colors";
 
-export default function Color({ color, onDelete, onEdit }) {
+// export default function Color({ color, onDelete, onEdit }) {
+export default function Color({
+  color,
+  setSelectedTheme,
+  setAllThemes,
+  colors,
+  setColors,
+}) {
   const [isConfirming, setIsConfirming] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("Copy!");
 
+  const deleteColor = (colorId) => {
+    const remainingColors = colors.filter((color) => colorId !== color.id);
+    setColors(remainingColors);
+
+    setSelectedTheme((prevTheme) => {
+      const updatedTheme = {
+        ...prevTheme,
+        colors: prevTheme.colors.filter((color) => color.id !== colorId),
+      };
+      setAllThemes((prevThemes) =>
+        prevThemes.map((theme) =>
+          theme.id === updatedTheme.id ? updatedTheme : theme
+        )
+      );
+      return updatedTheme;
+    });
+  };
+
+  const editColor = (colorId, changedColor) => {
+    const changedColors = colors.map((color) =>
+      color.id === colorId ? { ...color, ...changedColor } : color
+    );
+    setColors(changedColors);
+
+    setSelectedTheme((prevTheme) => {
+      const updatedTheme = {
+        ...prevTheme,
+        colors: prevTheme.colors.map((color) =>
+          color.id === colorId ? { ...color, ...changedColor } : color
+        ),
+      };
+      setAllThemes((prevThemes) =>
+        prevThemes.map((theme) =>
+          theme.id === updatedTheme.id ? updatedTheme : theme
+        )
+      );
+      return updatedTheme;
+    });
+  };
+
   function handleChange(changedColor) {
-    onEdit(color.id, changedColor);
+    // onEdit(color.id, changedColor);
+    editColor(color.id, changedColor);
     setIsEditing(false);
   }
 
@@ -63,7 +114,9 @@ export default function Color({ color, onDelete, onEdit }) {
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
-          <button className="button--red" onClick={() => onDelete(color.id)}>
+          {/* <button className="button--red" onClick={() => onDelete(color.id)}>
+           */}
+          <button className="button--red" onClick={() => deleteColor(color.id)}>
             Yes
           </button>
           <button

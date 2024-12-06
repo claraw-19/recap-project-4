@@ -12,9 +12,9 @@ function App() {
   //   localStorage.removeItem("allThemes");
   // };
   // clearLocalStorage();
-  const [colors, setColors] = useLocalStorageState("themecolors", {
-    defaultValue: initialColors,
-  });
+  // const [colors, setColors] = useLocalStorageState("themecolors", {
+  //   defaultValue: initialColors,
+  // });
 
   const [selectedTheme, setSelectedTheme] = useLocalStorageState(
     "selectedTheme",
@@ -23,6 +23,10 @@ function App() {
 
   const [allThemes, setAllThemes] = useLocalStorageState("allThemes", {
     defaultValue: initialThemes,
+  });
+
+  const [colors, setColors] = useLocalStorageState("themecolors", {
+    defaultValue: initialColors,
   });
 
   const addColor = (newColor) => {
@@ -43,45 +47,45 @@ function App() {
     });
   };
 
-  const deleteColor = (colorId) => {
-    const remainingColors = colors.filter((color) => colorId !== color.id);
-    setColors(remainingColors);
+  // const deleteColor = (colorId) => {
+  //   const remainingColors = colors.filter((color) => colorId !== color.id);
+  //   setColors(remainingColors);
 
-    setSelectedTheme((prevTheme) => {
-      const updatedTheme = {
-        ...prevTheme,
-        colors: prevTheme.colors.filter((color) => color.id !== colorId),
-      };
-      setAllThemes((prevThemes) =>
-        prevThemes.map((theme) =>
-          theme.id === updatedTheme.id ? updatedTheme : theme
-        )
-      );
-      return updatedTheme;
-    });
-  };
+  //   setSelectedTheme((prevTheme) => {
+  //     const updatedTheme = {
+  //       ...prevTheme,
+  //       colors: prevTheme.colors.filter((color) => color.id !== colorId),
+  //     };
+  //     setAllThemes((prevThemes) =>
+  //       prevThemes.map((theme) =>
+  //         theme.id === updatedTheme.id ? updatedTheme : theme
+  //       )
+  //     );
+  //     return updatedTheme;
+  //   });
+  // };
 
-  const editColor = (colorId, changedColor) => {
-    const changedColors = colors.map((color) =>
-      color.id === colorId ? { ...color, ...changedColor } : color
-    );
-    setColors(changedColors);
+  // const editColor = (colorId, changedColor) => {
+  //   const changedColors = colors.map((color) =>
+  //     color.id === colorId ? { ...color, ...changedColor } : color
+  //   );
+  //   setColors(changedColors);
 
-    setSelectedTheme((prevTheme) => {
-      const updatedTheme = {
-        ...prevTheme,
-        colors: prevTheme.colors.map((color) =>
-          color.id === colorId ? { ...color, ...changedColor } : color
-        ),
-      };
-      setAllThemes((prevThemes) =>
-        prevThemes.map((theme) =>
-          theme.id === updatedTheme.id ? updatedTheme : theme
-        )
-      );
-      return updatedTheme;
-    });
-  };
+  //   setSelectedTheme((prevTheme) => {
+  //     const updatedTheme = {
+  //       ...prevTheme,
+  //       colors: prevTheme.colors.map((color) =>
+  //         color.id === colorId ? { ...color, ...changedColor } : color
+  //       ),
+  //     };
+  //     setAllThemes((prevThemes) =>
+  //       prevThemes.map((theme) =>
+  //         theme.id === updatedTheme.id ? updatedTheme : theme
+  //       )
+  //     );
+  //     return updatedTheme;
+  //   });
+  // };
 
   const handleChange = (event) => {
     const selectedId = event.target.value;
@@ -118,8 +122,12 @@ function App() {
             <Color
               key={color.id}
               color={color}
-              onDelete={() => deleteColor(color.id)}
-              onEdit={editColor}
+              colors={colors}
+              setColors={setColors}
+              setAllThemes={setAllThemes}
+              setSelectedTheme={setSelectedTheme}
+              // onDelete={() => deleteColor(color.id)}
+              // onEdit={editColor}
             />
           );
         })
