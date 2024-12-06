@@ -10,28 +10,8 @@ export default function Color({ color, onDelete, onEdit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("Copy!");
 
-  function handleDelete() {
-    setIsConfirming(true);
-  }
-
-  function handleCancel() {
-    setIsConfirming(false);
-  }
-
-  function confirmDelete() {
-    onDelete(color.id);
-  }
-
-  function handleEdit() {
-    setIsEditing(true);
-  }
-
   function handleChange(changedColor) {
     onEdit(color.id, changedColor);
-    setIsEditing(false);
-  }
-
-  function handleCancelEdit() {
     setIsEditing(false);
   }
 
@@ -75,24 +55,27 @@ export default function Color({ color, onDelete, onEdit }) {
             onSubmitColor={handleChange}
             buttonText={"Change color"}
           />
-          <button onClick={handleCancelEdit}>Cancel</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
         </>
       ) : (
-        <button onClick={handleEdit}>Edit</button>
+        <button onClick={() => setIsEditing(true)}>Edit</button>
       )}
       {isConfirming ? (
         <>
           <p className="color-card-hightlight">Delete?</p>
-          <button className="button--red" onClick={confirmDelete}>
+          <button className="button--red" onClick={() => onDelete(color.id)}>
             Yes
           </button>
-          <button className="button--green" onClick={handleCancel}>
+          <button
+            className="button--green"
+            onClick={() => setIsConfirming(false)}
+          >
             No
           </button>
         </>
       ) : (
         <>
-          <button className="button--red" onClick={handleDelete}>
+          <button className="button--red" onClick={() => setIsConfirming(true)}>
             Delete
           </button>
         </>
