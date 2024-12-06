@@ -5,8 +5,9 @@ import { nanoid } from "nanoid";
 import { ColorForm } from "./Components/ColorForm/ColorForm";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
-import { ThemeForm } from "./Components/ThemeForm/ThemeForm";
-import { useState } from "react";
+import { ThemeActions } from "./Components/ThemeActions/ThemeActions";
+// import { ThemeForm } from "./Components/ThemeForm/ThemeForm";
+// import { useState } from "react";
 
 function App() {
   // const clearLocalStorage = () => {
@@ -26,34 +27,32 @@ function App() {
     defaultValue: initialThemes,
   });
 
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
 
-  const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
+  // const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
 
-  // const [isConfirmingEdit, setIsConfirmingEdit] = useState(false);
+  // const confirmDeleteTheme = () => {
+  //   const remainingThemes = allThemes.filter(
+  //     (theme) => theme.id !== selectedTheme.id
+  //   );
+  //   setAllThemes(remainingThemes);
+  //   setSelectedTheme(() => remainingThemes[0] || initialThemes[0]);
+  //   setIsConfirmingDelete(false);
+  // };
 
-  const confirmDeleteTheme = () => {
-    const remainingThemes = allThemes.filter(
-      (theme) => theme.id !== selectedTheme.id
-    );
-    setAllThemes(remainingThemes);
-    setSelectedTheme(() => remainingThemes[0] || initialThemes[0]);
-    setIsConfirmingDelete(false);
-  };
-
-  const handleDeleteTheme = () => {
-    // setIsEditing(false);
-    setIsConfirmingDelete(true);
-  };
+  // const handleDeleteTheme = () => {
+  //   // setIsEditing(false);
+  //   setIsConfirmingDelete(true);
+  // };
 
   // const setIsEditingTrue = () => {
   //   setIsConfirmingDelete(false);
   //   setIsEditing(true);
   // };
 
-  const cancelDeleteTheme = () => {
-    setIsConfirmingDelete(false);
-  };
+  // const cancelDeleteTheme = () => {
+  //   setIsConfirmingDelete(false);
+  // };
 
   const addColor = (newColor) => {
     const newColorWithId = { id: nanoid(), ...newColor };
@@ -121,28 +120,28 @@ function App() {
     }
   };
 
-  const addTheme = () => {
-    const newTheme = {
-      id: nanoid(),
-      name: "new theme",
-      colors: [],
-    };
-    setAllThemes((prevThemes) => [newTheme, ...prevThemes]);
-    setSelectedTheme(newTheme);
-  };
+  // const addTheme = () => {
+  //   const newTheme = {
+  //     id: nanoid(),
+  //     name: "new theme",
+  //     colors: [],
+  //   };
+  //   setAllThemes((prevThemes) => [newTheme, ...prevThemes]);
+  //   setSelectedTheme(newTheme);
+  // };
 
-  const editThemeName = (newName) => {
-    setSelectedTheme((prevTheme) => ({
-      ...prevTheme,
-      name: newName,
-    }));
-    setAllThemes((prevThemes) =>
-      prevThemes.map((theme) =>
-        theme.id === selectedTheme.id ? { ...theme, name: newName } : theme
-      )
-    );
-    setIsEditing(false);
-  };
+  // const editThemeName = (newName) => {
+  //   setSelectedTheme((prevTheme) => ({
+  //     ...prevTheme,
+  //     name: newName,
+  //   }));
+  //   setAllThemes((prevThemes) =>
+  //     prevThemes.map((theme) =>
+  //       theme.id === selectedTheme.id ? { ...theme, name: newName } : theme
+  //     )
+  //   );
+  //   setIsEditing(false);
+  // };
 
   return (
     <>
@@ -154,7 +153,14 @@ function App() {
           </option>
         ))}
       </select>
-      <button onClick={addTheme} className="button--green">
+      <ThemeActions
+        setAllThemes={setAllThemes}
+        setSelectedTheme={setSelectedTheme}
+        selectedTheme={selectedTheme}
+        allThemes={allThemes}
+        initialThemes={initialThemes}
+      />
+      {/* <button onClick={addTheme} className="button--green">
         Add
       </button>
       {isEditing ? (
@@ -201,7 +207,7 @@ function App() {
         >
           Remove Theme
         </button>
-      )}
+      )} */}
 
       <ColorForm onSubmitColor={addColor} buttonText={"Add color"} />
       {selectedTheme.colors.length === 0 ? (
