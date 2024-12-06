@@ -47,46 +47,6 @@ function App() {
     });
   };
 
-  // const deleteColor = (colorId) => {
-  //   const remainingColors = colors.filter((color) => colorId !== color.id);
-  //   setColors(remainingColors);
-
-  //   setSelectedTheme((prevTheme) => {
-  //     const updatedTheme = {
-  //       ...prevTheme,
-  //       colors: prevTheme.colors.filter((color) => color.id !== colorId),
-  //     };
-  //     setAllThemes((prevThemes) =>
-  //       prevThemes.map((theme) =>
-  //         theme.id === updatedTheme.id ? updatedTheme : theme
-  //       )
-  //     );
-  //     return updatedTheme;
-  //   });
-  // };
-
-  // const editColor = (colorId, changedColor) => {
-  //   const changedColors = colors.map((color) =>
-  //     color.id === colorId ? { ...color, ...changedColor } : color
-  //   );
-  //   setColors(changedColors);
-
-  //   setSelectedTheme((prevTheme) => {
-  //     const updatedTheme = {
-  //       ...prevTheme,
-  //       colors: prevTheme.colors.map((color) =>
-  //         color.id === colorId ? { ...color, ...changedColor } : color
-  //       ),
-  //     };
-  //     setAllThemes((prevThemes) =>
-  //       prevThemes.map((theme) =>
-  //         theme.id === updatedTheme.id ? updatedTheme : theme
-  //       )
-  //     );
-  //     return updatedTheme;
-  //   });
-  // };
-
   const handleChange = (event) => {
     const selectedId = event.target.value;
     const theme = allThemes.find((theme) => theme.id === selectedId);
@@ -126,8 +86,6 @@ function App() {
               setColors={setColors}
               setAllThemes={setAllThemes}
               setSelectedTheme={setSelectedTheme}
-              // onDelete={() => deleteColor(color.id)}
-              // onEdit={editColor}
             />
           );
         })
